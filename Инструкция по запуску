@@ -1,0 +1,42 @@
+1. Клонировать репозиторий
+git clone https://github.com/Rezzaklalala68/api-monitoring.git
+cd api-monitoring-service
+
+2. Убедиться, что установлены:
+Java 17+
+
+Maven
+
+Docker и Docker Compose
+
+3. Запустить инфраструктуру (Kafka + PostgreSQL)
+
+docker-compose up -d
+Будут подняты:
+
+Kafka на localhost:9092
+
+Zookeeper
+
+PostgreSQL на localhost:5432 (пользователь: Anton, пароль: Anton)
+
+4. Запустить Spring Boot приложение
+
+5. Авторизация (Basic Auth)
+Роль	Логин	Пароль
+USER	user	user123
+ADMIN	admin	admin123
+
+6. Доступные эндпоинты
+Метод	URI	Роль	Описание
+GET	/status	USER, ADMIN	Проверка статуса сервиса
+GET	/data	ADMIN	Получение 10 последних записей из БД
+GET	/fetch-now	ADMIN	Принудительный запуск опроса API
+
+
+7. Поведение по таймеру
+Автоматический опрос API происходит каждые 60 секунд
+
+При успешном ответе: данные сохраняются в БД сообщение отправляется в Kafka-топик api-data
+
+При ошибке: сохраняется ошибка сообщение отправляется в Kafka-топик api-errors

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +17,17 @@ import ru.rezzaklalala.monitoringservice.service.ApiService;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ApiController {
     ApiDataRepository apiDataRepository;
     ApiService service;
 
-
+    @Autowired
+    public ApiController(ApiDataRepository apiDataRepository, ApiService service) {
+        this.apiDataRepository = apiDataRepository;
+        this.service = service;
+    }
 
     @Operation(summary = "Проверка статуса сервиса", description = "Возвращает OK, если сервис работает")
     @ApiResponses(value = {

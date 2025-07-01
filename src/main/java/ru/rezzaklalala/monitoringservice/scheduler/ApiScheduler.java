@@ -18,8 +18,6 @@ import ru.rezzaklalala.monitoringservice.service.ApiService;
 
 
 @Component
-
-
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ApiScheduler {
 
